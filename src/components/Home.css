@@ -1,0 +1,30 @@
+@keyframes borderColorCycle {
+  0% {
+    border-color: violet;
+  }
+  14% {
+    border-color: indigo;
+  }
+  28% {
+    border-color: blue;
+  }
+  42% {
+    border-color: green;
+  }
+  57% {
+    border-color: yellow;
+  }
+  71% {
+    border-color: orange;
+  }
+  85% {
+    border-color: red;
+  }
+  100% {
+    border-color: violet;
+  }
+}
+
+.border-animated {
+  animation: borderColorCycle 3s linear infinite;
+}
