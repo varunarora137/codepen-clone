@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { HiChevronDoubleLeft } from "react-icons/hi";
-// import Logo from "../assets/logo.jpeg";
 import Logo from "../assets/logo-removebg-preview.png";
 import { MdHome } from "react-icons/md";
 import { FaSearchengin } from "react-icons/fa6";
 import "./Home.css";
-import Projects from "./Projects";
-import SignUp from "./SignUp";
+import Projects from "./Projects.jsx";
+import SignUp from "./SignUp.jsx";
 
 import { Link, Route, Routes } from "react-router-dom";
 
@@ -64,13 +63,13 @@ function Home() {
           {!user && (
             <div className="flex items-center justify-center gap-3">
               <Link
-                to={"/home/auth"}
+                to={"/home/auth/signup"}
                 className="bg-emerald-500 px-4 py-2 rounded-md  text-white text-lg cursor-pointer hover:bg-emerald-700"
               >
                 SignUp
               </Link>
               <Link
-                to={"/home/auth"}
+                to={"/home/auth/login"}
                 className="bg-secondary px-4 py-2 rounded-md  text-white text-lg cursor-pointer hover:bg-primaryText"
               >
                 LogIn
@@ -83,7 +82,7 @@ function Home() {
         <div className="w-full">
           <Routes>
             <Route path="/*" element={<Projects />} />
-            <Route path="/auth" element={<SignUp />} />
+            <Route path="/auth/:id" element={<SignUp />} />
           </Routes>
         </div>
       </div>
