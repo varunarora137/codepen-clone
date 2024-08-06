@@ -6,14 +6,54 @@ import { useEffect, useState } from "react";
 import UserInput from "./UserInput";
 import { useParams } from "react-router-dom";
 import OR from "./OR";
+import { signInWithGithub, signInWithGoogle } from "../auth";
+import { auth } from "../firebase";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 
 function SignUp() {
   let { id } = useParams();
-  console.log(id);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailVaildationMessage, setEmailVaildationMessage] = useState(false);
   const [isLogin, setIsLogin] = useState(id === "login");
+  const [alert, setAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+
+  async function createNewUser() {
+    if (emailVaildationMessage) {
+      await createUserWithEmailAndPassword(auth, email, password)
+        .then((user) => {
+          console.log(user);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }
+
+  async function logInWithEmailAndPassword() {
+    await signInWithEmailAndPassword(auth, email, password)
+      .then((user) => {
+        console.log(user);
+      })
+      .catch((error) => {
+        console.log(error.message);
+        if (error.message.includes("invalid-credential")) {
+          setAlert(true);
+          setAlertMessage("Invalid Email or Password");
+        } else {
+          setAlert(true);
+          setAlertMessage("Temporarily Disabled due to many failures");
+        }
+
+        setTimeout(() => {
+          setAlert(false);
+        }, 3000);
+      });
+  }
 
   useEffect(() => {
     if (id === "login") {
@@ -51,8 +91,13 @@ function SignUp() {
             Icon={MdPassword}
             setStateFunction={setPassword}
           />
+          {/* /////////////// */}
+          {alert && <p className="text-red-500">{alertMessage}</p>}
           {/* ////////////////////// */}
-          <div className="flex items-center justify-center w-full py-3 rounded-xl hover:bg-emerald-400 cursor-pointer bg-emerald-500">
+          <div
+            onClick={!isLogin ? createNewUser : logInWithEmailAndPassword}
+            className="flex items-center justify-center w-full py-3 rounded-xl hover:bg-emerald-400 cursor-pointer bg-emerald-500"
+          >
             <p className="text-xl text-white">
               {isLogin ? "Login" : "Sign Up"}
             </p>
@@ -68,12 +113,18 @@ function SignUp() {
           </p>
           {/* //////////////////////// */}
           <OR />
-          <div className="flex items-center justify-center gap-3 bg-[rgba(256,256,256,.2)] backdrop-blur-md w-full py-3 rounded-xl hover:bg-[rgba(256,256,256,.4)] cursor-pointer">
+          <div
+            className="flex items-center justify-center gap-3 bg-[rgba(256,256,256,.2)] backdrop-blur-md w-full py-3 rounded-xl hover:bg-[rgba(256,256,256,.4)] cursor-pointer"
+            onClick={signInWithGoogle}
+          >
             <FcGoogle className="text-3xl" />
             <p className="text-white text-xl ">Sign in with Google</p>
           </div>
           <OR />
-          <div className="flex items-center justify-center gap-3 bg-[rgba(256,256,256,.2)] backdrop-blur-md w-full py-3 rounded-xl hover:bg-[rgba(256,256,256,.4)] cursor-pointer">
+          <div
+            onClick={signInWithGithub}
+            className="flex items-center justify-center gap-3 bg-[rgba(256,256,256,.2)] backdrop-blur-md w-full py-3 rounded-xl hover:bg-[rgba(256,256,256,.4)] cursor-pointer"
+          >
             <FaGithub className="text-3xl" />
             <p className="text-white text-xl ">Sign in with Github</p>
           </div>
