@@ -8,10 +8,18 @@ import Projects from "./Projects.jsx";
 import SignUp from "./SignUp.jsx";
 
 import { Link, Route, Routes } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import UserProfile from "./UserProfile.jsx";
+import { SET_SEARCH_TERM } from "../Store/Slices/search.js";
 
 function Home() {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
-  const [user, setUser] = useState(false);
+  const searchTerm = useSelector((state) =>
+    state.searchTerm?.search ? state.searchTerm?.search : ""
+  );
+  // const [user, setUser] = useState(false);
+  const user = useSelector((state) => state.user?.currentUser);
+  const dispatch = useDispatch();
   return (
     <>
       <div
@@ -56,8 +64,10 @@ function Home() {
             <FaSearchengin className="text-2xl text-primaryText " />
             <input
               type="text"
+              value={searchTerm}
               className="flex-1 px-4 text-xl bg-transparent outline-none border-none text-primaryText placeholder:text-gray-600"
               placeholder="Seach here..."
+              onChange={(e) => dispatch(SET_SEARCH_TERM(e.target.value))}
             />
           </div>
           {!user && (
@@ -76,7 +86,7 @@ function Home() {
               </Link>
             </div>
           )}
-          {user && <div></div>}
+          {user && <UserProfile />}
         </div>
         {/* /////////////////////////////// */}
         <div className="w-full">

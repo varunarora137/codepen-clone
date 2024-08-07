@@ -2,20 +2,33 @@ import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import Home from "./components/Home";
 import { useEffect, useState } from "react";
 import { auth, db } from "./firebase";
-import { doc, setDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  onSnapshot,
+  orderBy,
+  query,
+  setDoc,
+} from "firebase/firestore";
 import { Circles } from "react-loader-spinner";
+import { SET_USER } from "./Store/Slices/User";
+import { useDispatch } from "react-redux";
+import NewProject from "./components/NewProject.jsx";
+import { SET_PROJECTS } from "./Store/Slices/Projects.js";
 
 function App() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const unsub = auth.onAuthStateChanged((user) => {
       if (user) {
         console.log(user, user.providerData[0]);
-        setDoc(doc(db, "users", user?.uid), user?.providerData[0]).then(
-          () => {}
-        );
+        setDoc(doc(db, "users", user?.uid), user?.providerData[0]).then(() => {
+          dispatch(SET_USER(user?.providerData[0]));
+          navigate("/home/projects", { replace: true });
+        });
       } else {
         navigate("/home/auth/login", { replace: true });
       }
@@ -28,6 +41,19 @@ function App() {
     return () => unsub();
   }, []);
 
+  useEffect(() => {
+    const projectQuery = query(
+      collection(db, "projects"),
+      orderBy("id", "desc")
+    );
+    const unsubscribe = onSnapshot(projectQuery, (querySnaps) => {
+      const projectsList = querySnaps.docs.map((doc) => doc.data());
+      dispatch(SET_PROJECTS(projectsList));
+    });
+    return unsubscribe;
+  }, []);
+
+  // if (isLoading) return <div>Loading</div>;
   return (
     <>
       {isLoading ? (
@@ -47,6 +73,7 @@ function App() {
           <Routes>
             <Route path="/home/*" element={<Home />} />
             <Route path="*" element={<Navigate to={"/home"} />} />
+            <Route path="/newProject" element={<NewProject />} />
           </Routes>
         </div>
       )}
