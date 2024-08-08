@@ -20,7 +20,7 @@ A web application that replicates the core functionality of CodePen, allowing us
 
 ![Editor](https://github.com/varunarora137/codepen-clone/blob/main/src/imgs-for-readme/code.png)
 
-## AI Chatbot
+### AI Chatbot
 
 ![AI](https://github.com/varunarora137/codepen-clone/blob/main/src/imgs-for-readme/ai.png)
 
@@ -89,9 +89,8 @@ Before you begin, ensure you have met the following requirements:
 
 6. **Run the Application**
 
-````sh
+```sh
   npm run dev
-  ```
 
 ## Usage
 
@@ -113,4 +112,4 @@ Before you begin, ensure you have met the following requirements:
 - **CodeMirror**: In-browser code editor.
 - **React**: Frontend library for building the UI.
 - **Gemini API**: Provides chatbot functionality.
-````
+```
