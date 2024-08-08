@@ -113,7 +113,3 @@ Before you begin, ensure you have met the following requirements:
 - **CodeMirror**: In-browser code editor.
 - **React**: Frontend library for building the UI.
 - **Gemini API**: Provides chatbot functionality.
-
-```
-
-```
