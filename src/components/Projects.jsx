@@ -12,11 +12,13 @@ function Projects() {
   useEffect(() => {
     if (searchTerm.length > 0) {
       const sTerm = searchTerm.toLowerCase();
+      const arr = [];
       projects?.map((project) => {
         if (project.title.toLowerCase().includes(sTerm)) {
-          setFilteredProjects((prev) => [...prev, project]);
+          arr.push(project);
         }
       });
+      setFilteredProjects(arr);
     } else {
       setFilteredProjects(null);
     }

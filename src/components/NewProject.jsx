@@ -64,12 +64,12 @@ function NewProject() {
 
   return (
     <>
-      <div className="w-screen h-screen flex flex-col items-start justify-start overflow-hidden">
+      <div className="w-screen h-screen flex flex-col items-start justify-start !overflow-hidden">
         {/* /////////////////// */}
         <ToastContainer />
         {/* /////////////////////////// */}
 
-        <header className="w-full flex  items-center justify-between px-12 py-4">
+        <header className="w-full flex  items-center justify-between px-8 py-2 ">
           <div className="flex items-center justify-center gap-6">
             <Link to={"/home/projects"}>
               <img
@@ -140,7 +140,7 @@ function NewProject() {
 
         {/* /////////////////////////// */}
 
-        <div>
+        <div className="!overflow-hidden">
           <SplitPane
             split="horizontal"
             minSize={100}
@@ -164,6 +164,7 @@ function NewProject() {
                 </div>
                 <div className="w-full px-2">
                   <CodeMirror
+                    className="CodeMirror"
                     value={html}
                     height="600px"
                     extensions={[javascript({ jsx: true })]}
@@ -188,6 +189,7 @@ function NewProject() {
                   </div>
                   <div className="w-full px-2">
                     <CodeMirror
+                      className="CodeMirror"
                       value={css}
                       height="600px"
                       extensions={[javascript({ jsx: true })]}
@@ -197,7 +199,7 @@ function NewProject() {
                   </div>
                 </div>
                 {/* //////////////////////// */}
-                <div className="w-full h-full flex flex-col items-start justify-start">
+                <div className="w-full h-full flex flex-col items-start justify-start !overflow-hidden">
                   <div className="w-full flex items-center justify-between">
                     <div className="bg-secondary px-4 py-2 border-t-4 flex items-center justify-center gap-3 border-t-gray-500">
                       <FaJs className="text-xl text-yellow-500" />
@@ -211,6 +213,7 @@ function NewProject() {
                   </div>
                   <div className="w-full px-2">
                     <CodeMirror
+                      className="CodeMirror"
                       value={js}
                       height="600px"
                       extensions={[javascript({ jsx: true })]}
@@ -224,7 +227,7 @@ function NewProject() {
 
             {/* ////////////////// */}
             <div
-              className="bg-white"
+              className="bg-white !overflow-hidden"
               style={{ overflow: "hidden", height: "100%" }}
             >
               <iframe
