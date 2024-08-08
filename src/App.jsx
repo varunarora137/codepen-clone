@@ -73,7 +73,10 @@ function App() {
       orderBy("id", "desc")
     );
     const unsubscribe = onSnapshot(projectQuery, (querySnaps) => {
-      const projectsList = querySnaps.docs.map((doc) => doc.data());
+      const projectsList = querySnaps.docs.map((doc) => {
+        console.log(doc.data());
+        return doc.data();
+      });
       dispatch(SET_PROJECTS(projectsList));
     });
     return unsubscribe;

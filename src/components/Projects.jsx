@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import { MdBookmark } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
 import { useSelector } from "react-redux";
+import { db } from "../firebase";
+import { deleteDoc, doc } from "firebase/firestore";
 
 function Projects() {
   const projects = useSelector((state) => state.projects?.projects);
@@ -8,6 +10,15 @@ function Projects() {
   const searchTerm = useSelector((state) =>
     state.searchTerm?.search ? state.searchTerm?.search : ""
   );
+
+  const handleDelete = async (id) => {
+    try {
+      await deleteDoc(doc(db, "projects", id));
+      console.log("Document successfully deleted!");
+    } catch (error) {
+      console.error("Error deleting document: ", error);
+    }
+  };
 
   useEffect(() => {
     if (searchTerm.length > 0) {
@@ -27,16 +38,26 @@ function Projects() {
     <div className="w-full py-6 flex items-center justify-center gap-6 flex-wrap">
       {filteredProjects
         ? filteredProjects?.map((project, ind) => (
-            <ProjectCard key={ind} project={project} ind={ind} />
+            <ProjectCard
+              key={ind}
+              project={project}
+              ind={ind}
+              handleDelete={handleDelete}
+            />
           ))
         : projects?.map((project, ind) => (
-            <ProjectCard key={ind} project={project} ind={ind} />
+            <ProjectCard
+              key={ind}
+              project={project}
+              ind={ind}
+              handleDelete={handleDelete}
+            />
           ))}
     </div>
   );
 }
 
-function ProjectCard({ project, ind }) {
+function ProjectCard({ project, ind, handleDelete }) {
   return (
     <div
       key={ind}
@@ -77,7 +98,10 @@ function ProjectCard({ project, ind }) {
         </div>
         {/* ///////////////////////// */}
         <div className="cursor-pointer ml-auto">
-          <MdBookmark className="text-primaryText text-3xl" />
+          <MdDelete
+            className="text-primaryText text-3xl"
+            onClick={() => handleDelete(project.id)}
+          />
         </div>
       </div>
     </div>
