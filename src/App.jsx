@@ -1,6 +1,6 @@
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import Home from "./components/Home";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { auth, db } from "./firebase";
 import {
   collection,

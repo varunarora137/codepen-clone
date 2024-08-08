@@ -169,7 +169,7 @@ function NewProject() {
                     height="600px"
                     extensions={[javascript({ jsx: true })]}
                     theme={"dark"}
-                    onChange={(value, viewUpdate) => setHtml(value)}
+                    onChange={(value) => setHtml(value)}
                   />
                 </div>
               </div>
@@ -194,7 +194,7 @@ function NewProject() {
                       height="600px"
                       extensions={[javascript({ jsx: true })]}
                       theme={"dark"}
-                      onChange={(value, viewUpdate) => setCss(value)}
+                      onChange={(value) => setCss(value)}
                     />
                   </div>
                 </div>
@@ -218,7 +218,7 @@ function NewProject() {
                       height="600px"
                       extensions={[javascript({ jsx: true })]}
                       theme={"dark"}
-                      onChange={(value, viewUpdate) => setJs(value)}
+                      onChange={(value) => setJs(value)}
                     />
                   </div>
                 </div>
