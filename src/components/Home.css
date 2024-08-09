@@ -28,3 +28,14 @@
 .border-animated {
   animation: borderColorCycle 3s linear infinite;
 }
+
+@media screen and (max-width: 768px) {
+  .home-div {
+    display: flex;
+    flex-direction: column;
+  }
+  .aside {
+    width: 100vw;
+    height: 10vh;
+  }
+}

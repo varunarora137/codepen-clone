@@ -25,7 +25,7 @@ function Home() {
       <div
         className={` ${
           isSidebarOpen ? "flex-[.15] xl:flex-[.15]" : "w-2"
-        } min-h-screen max-h-screen relative bg-secondary px-3 py-6 flex flex-col items-center justify-start gap-4 transition-all duration-200 ease-in-out`}
+        } min-h-screen max-h-screen relative bg-secondary px-3 py-6 flex flex-col items-center justify-start gap-4 transition-all duration-200 ease-in-out aside`}
       >
         {/* ////////////////////////////////////// */}
         <div
@@ -51,10 +51,12 @@ function Home() {
           {user && (
             <Link
               to={"/home/projects"}
-              className="flex items-center justify-center gap-6"
+              className="flex items-center justify-center gap-6 hover:text-white group"
             >
-              <MdHome className="text-primaryText text-xl" />
-              <p className="text-lg text-primaryText">Home</p>
+              <MdHome className="text-primaryText text-xl group-hover:text-white" />
+              <p className="text-lg text-primaryText group-hover:text-white">
+                Home
+              </p>
             </Link>
           )}
         </div>

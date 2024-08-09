@@ -4,7 +4,7 @@ import { MdPassword } from "react-icons/md";
 import { FcGoogle } from "react-icons/fc";
 import { useEffect, useState } from "react";
 import UserInput from "./UserInput";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import OR from "./OR";
 import { signInWithGithub, signInWithGoogle } from "../auth";
 import { auth } from "../firebase";
@@ -22,11 +22,13 @@ function SignUp() {
   const [alert, setAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
 
+  const navigate = useNavigate();
   async function createNewUser() {
     if (emailVaildationMessage) {
       await createUserWithEmailAndPassword(auth, email, password)
         .then((user) => {
           console.log(user);
+          navigate("/auth/login");
         })
         .catch((error) => {
           console.log(error);

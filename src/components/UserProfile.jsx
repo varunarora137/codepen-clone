@@ -27,27 +27,27 @@ function UserProfile() {
       </div>
       <div
         onClick={() => setIsMenu(!isMenu)}
-        className="flex items-center justify-center p-3.5 rounded-md bg-secondary cursor-pointer"
+        className="flex items-center justify-center p-3.5 rounded-md bg-secondary cursor-pointer group"
       >
-        <FaChevronDown className=" text-primaryText" />
+        <FaChevronDown className=" text-primaryText group-hover:text-white" />
       </div>
       {isMenu && (
         <div className="bg-secondary absolute top-16 right-0 px-4 py-3 rounded-xl shadow-md z-10 flex flex-col items-start justify-start gap-4 min-w-[225px]">
           <Link
             to="/home/projects"
-            className="text-lg text-primaryText hover:bg-[rgba(256,256,256,0.05)] px-2 py-1 w-full rounded-md"
+            className="text-lg text-primaryText hover:bg-[rgba(256,256,256,0.05)] px-2 py-1 w-full rounded-md hover:text-white"
           >
             Projects
           </Link>
           <Link
             to="/home/collection"
-            className="text-lg text-primaryText hover:bg-[rgba(256,256,256,0.05)] px-2 py-1 w-full rounded-md"
+            className="text-lg text-primaryText hover:bg-[rgba(256,256,256,0.05)] px-2 py-1 w-full rounded-md hover:text-white "
           >
             Collections
           </Link>
           <Link
             to="/home/profile"
-            className="text-lg text-primaryText hover:bg-[rgba(256,256,256,0.05)] px-2 py-1 w-full rounded-md"
+            className="text-lg text-primaryText hover:bg-[rgba(256,256,256,0.05)] px-2 py-1 w-full rounded-md hover:text-white "
           >
             Profile
           </Link>
@@ -56,7 +56,7 @@ function UserProfile() {
               dispatch(SET_USER_NULL());
               await auth.signOut().then(() => window.location.reload());
             }}
-            className="text-lg text-primaryText hover:bg-[rgba(256,256,256,0.05)] px-2 py-1 w-full rounded-md"
+            className="text-lg text-primaryText hover:bg-[rgba(256,256,256,0.05)] px-2 py-1 w-full rounded-md hover:text-white cursor-pointer"
           >
             Sign Out
           </p>

@@ -19,6 +19,7 @@ import { IoChatbubbleEllipses } from "react-icons/io5";
 import { IoMdSend } from "react-icons/io";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import ReactMarkdown from "react-markdown";
+import "./components/Home.css";
 function App() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
@@ -98,7 +99,7 @@ function App() {
         </div>
       ) : (
         <>
-          <div className="w-screen h-screen flex items-start  justify-start overflow-hidden">
+          <div className="w-screen h-screen flex items-start  justify-start overflow-hidden home-div">
             <Routes>
               <Route path="/home/*" element={<Home />} />
               <Route path="*" element={<Navigate to={"/home"} />} />
@@ -121,7 +122,7 @@ function App() {
                     )}
                     {getAns && <p className="text-center">Please wait...</p>}
                     {ques && ans && (
-                      <div className="mt-2 max-h-[240px] !overflow-auto bg-gray-300 text-black px-2 py-2 rounded-lg">
+                      <div className="mt-2 max-h-[240px] overflow-auto bg-gray-300 text-black px-2 py-2 rounded-lg">
                         <span className="font-bold"> Ans: </span>
                         <ReactMarkdown>{ans}</ReactMarkdown>
                       </div>
@@ -149,7 +150,7 @@ function App() {
                 </div>
               )}
               <IoChatbubbleEllipses
-                className="fixed cursor-pointer bottom-4 right-8  text-primaryText text-[60px]"
+                className="fixed cursor-pointer bottom-4 right-8  text-primaryText text-[60px] hover:text-blue-400"
                 onClick={() => setVisible(!visible)}
               />
             </div>

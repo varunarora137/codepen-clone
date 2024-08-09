@@ -13,15 +13,19 @@ import { doc, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useLocation } from "react-router-dom";
 
 function NewProject() {
-  const [html, setHtml] = useState("");
-  const [css, setCss] = useState("");
-  const [js, setJs] = useState("");
-  const [output, setOutput] = useState("");
-  const [title, setTitle] = useState("Untitled");
+  const location = useLocation();
+  const project = location.state || {};
+
+  const [html, setHtml] = useState(project.html || "");
+  const [css, setCss] = useState(project.css || "");
+  const [js, setJs] = useState(project.js || "");
+  const [output, setOutput] = useState(project.output || "");
+  const [title, setTitle] = useState(project.title || "Untitled");
   const [isTitle, setIsTitle] = useState("");
-  const user = useSelector((state) => state.user?.currentUser);
+  const user = useSelector((state) => state?.user?.currentUser);
 
   useEffect(() => {
     generateOutput();
@@ -42,7 +46,7 @@ function NewProject() {
   }
 
   async function saveProgram() {
-    const id = `${Date.now()}`;
+    const id = project.id || `${Date.now()}`;
     const _doc = {
       id,
       title,
@@ -101,14 +105,14 @@ function NewProject() {
                     className="cursor-pointer"
                     onClick={() => setIsTitle(false)}
                   >
-                    <MdCheck className="text-2xl text-emerald-500" />
+                    <MdCheck className="text-2xl text-emerald-500 hover:text-white" />
                   </div>
                 ) : (
                   <div
                     className="cursor-pointer"
                     onClick={() => setIsTitle(true)}
                   >
-                    <MdEdit className="text-2xl text-primaryText" />
+                    <MdEdit className="text-2xl text-primaryText hover:text-white" />
                   </div>
                 )}
               </div>
@@ -116,9 +120,9 @@ function NewProject() {
                 <p className="text-primaryText text-sm capitalize">
                   {user?.displayName
                     ? user?.displayName
-                    : `${user?.email.split("@")[0]}`}
+                    : `${user?.email?.split("@")[0]}`}
                 </p>
-                <p className="text-[10px] bg-emerald-500 rounded-sm px-2 py-[1px] text-primary font-semibold cursor-pointer">
+                <p className="text-[10px] bg-emerald-500 rounded-sm px-2 py-[1px] text-primary font-semibold cursor-pointer hover:text-white">
                   + Follow
                 </p>
               </div>
@@ -129,7 +133,7 @@ function NewProject() {
             <div className="flex items-center justify-center gap-4">
               <button
                 onClick={saveProgram}
-                className="px-6 py-2 bg-primaryText cursor-pointer text-base text-primary font-semibold rounded-md"
+                className="px-6 py-2 bg-primaryText cursor-pointer text-base text-primary font-semibold rounded-md hover:text-white"
               >
                 Save
               </button>
@@ -158,8 +162,8 @@ function NewProject() {
                   </div>
                   {/* ///////////////// */}
                   <div className="flex items-center justify-center cursor-pointer gap-5 px-4">
-                    <FcSettings className="text-xl" />
-                    <FaChevronDown className="text-xl text-primaryText" />
+                    <FcSettings className="text-xl hover:text-white" />
+                    <FaChevronDown className="text-xl text-primaryText hover:text-white" />
                   </div>
                 </div>
                 <div className="w-full px-2">
@@ -183,8 +187,8 @@ function NewProject() {
                     </div>
                     {/* ///////////////// */}
                     <div className="flex items-center justify-center cursor-pointer gap-5 px-4">
-                      <FcSettings className="text-xl" />
-                      <FaChevronDown className="text-xl text-primaryText" />
+                      <FcSettings className="text-xl hover:text-white" />
+                      <FaChevronDown className="text-xl text-primaryText hover:text-white" />
                     </div>
                   </div>
                   <div className="w-full px-2">
@@ -207,8 +211,8 @@ function NewProject() {
                     </div>
                     {/* ///////////////// */}
                     <div className="flex items-center justify-center cursor-pointer gap-5 px-4">
-                      <FcSettings className="text-xl" />
-                      <FaChevronDown className="text-xl text-primaryText" />
+                      <FcSettings className="text-xl hover:text-white" />
+                      <FaChevronDown className="text-xl text-primaryText hover:text-white" />
                     </div>
                   </div>
                   <div className="w-full px-2">

@@ -3,6 +3,10 @@ import { MdDelete } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { db } from "../firebase";
 import { deleteDoc, doc } from "firebase/firestore";
+import { MdEdit } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Projects() {
   const projects = useSelector((state) => state.projects?.projects);
@@ -12,6 +16,25 @@ function Projects() {
   );
 
   const user = useSelector((state) => state.user?.currentUser);
+  const navigate = useNavigate();
+
+  function handleEdit(project) {
+    console.log("hello");
+    if (user && user.uid === project.user.uid) {
+      navigate("/newProject", { state: project });
+    } else {
+      toast.error("No Permission", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  }
 
   const handleDelete = async (id, uid) => {
     if (user && user.uid === uid) {
@@ -21,6 +44,17 @@ function Projects() {
       } catch (error) {
         console.error("Error deleting document: ", error);
       }
+    } else {
+      toast.error("No Permission", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 
@@ -40,6 +74,7 @@ function Projects() {
   }, [searchTerm]);
   return (
     <div className="w-full py-6 flex items-center justify-center gap-6 flex-wrap">
+      <ToastContainer />
       {filteredProjects
         ? filteredProjects?.map((project, ind) => (
             <ProjectCard
@@ -47,12 +82,14 @@ function Projects() {
               project={project}
               ind={ind}
               handleDelete={handleDelete}
+              handleEdit={handleEdit}
             />
           ))
         : projects?.map((project, ind) => (
             <ProjectCard
               key={ind}
               project={project}
+              handleEdit={handleEdit}
               ind={ind}
               handleDelete={handleDelete}
             />
@@ -61,7 +98,7 @@ function Projects() {
   );
 }
 
-function ProjectCard({ project, ind, handleDelete }) {
+function ProjectCard({ project, ind, handleDelete, handleEdit }) {
   return (
     <div
       key={ind}
@@ -87,7 +124,7 @@ function ProjectCard({ project, ind, handleDelete }) {
             />
           ) : (
             <p className="font-semibold text-xl text-white">
-              {project?.ser?.email[0].toUpperCase()}
+              {project?.user?.email[0].toUpperCase()}
             </p>
           )}
         </div>
@@ -101,9 +138,13 @@ function ProjectCard({ project, ind, handleDelete }) {
           </p>
         </div>
         {/* ///////////////////////// */}
-        <div className="cursor-pointer ml-auto">
+        <div className="cursor-pointer ml-auto flex gap-4">
+          <MdEdit
+            className="text-primaryText text-3xl hover:text-white"
+            onClick={() => handleEdit(project)}
+          />
           <MdDelete
-            className="text-primaryText text-3xl"
+            className="text-primaryText text-3xl hover:text-white"
             onClick={() => handleDelete(project.id, project.user.uid)}
           />
         </div>
