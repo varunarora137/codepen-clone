@@ -11,12 +11,16 @@ function Projects() {
     state.searchTerm?.search ? state.searchTerm?.search : ""
   );
 
-  const handleDelete = async (id) => {
-    try {
-      await deleteDoc(doc(db, "projects", id));
-      console.log("Document successfully deleted!");
-    } catch (error) {
-      console.error("Error deleting document: ", error);
+  const user = useSelector((state) => state.user?.currentUser);
+
+  const handleDelete = async (id, uid) => {
+    if (user && user.uid === uid) {
+      try {
+        await deleteDoc(doc(db, "projects", id));
+        console.log("Document successfully deleted!");
+      } catch (error) {
+        console.error("Error deleting document: ", error);
+      }
     }
   };
 
@@ -100,7 +104,7 @@ function ProjectCard({ project, ind, handleDelete }) {
         <div className="cursor-pointer ml-auto">
           <MdDelete
             className="text-primaryText text-3xl"
-            onClick={() => handleDelete(project.id)}
+            onClick={() => handleDelete(project.id, project.user.uid)}
           />
         </div>
       </div>

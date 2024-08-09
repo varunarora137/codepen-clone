@@ -41,11 +41,15 @@ function SignUp() {
       })
       .catch((error) => {
         console.log(error.message);
-        if (error.message.includes("invalid-credential")) {
+        if (
+          error.message.includes("invalid-credential") ||
+          error.message.includes("auth/invalid-email")
+        ) {
           setAlert(true);
           setAlertMessage("Invalid Email or Password");
         } else {
           setAlert(true);
+
           setAlertMessage("Temporarily Disabled due to many failures");
         }
 

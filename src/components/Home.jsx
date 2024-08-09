@@ -39,13 +39,15 @@ function Home() {
           <Link to={"/home"}>
             <img src={Logo} alt="img" className="object-contain w-72 h-auto" />
           </Link>
-          <Link to={"/newProject"}>
-            <div className="px-6 py-3 flex items-center justify-center rounded-xl border  cursor-pointer group border-animated">
-              <p className="text-gray-400 group-hover:text-gray-200 capitalize">
-                Start Coding
-              </p>
-            </div>
-          </Link>
+          {user && (
+            <Link to={"/newProject"}>
+              <div className="px-6 py-3 flex items-center justify-center rounded-xl border  cursor-pointer group border-animated">
+                <p className="text-gray-400 group-hover:text-gray-200 capitalize">
+                  Start Coding
+                </p>
+              </div>
+            </Link>
+          )}
           {user && (
             <Link
               to={"/home/projects"}

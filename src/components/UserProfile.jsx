@@ -1,12 +1,14 @@
 import { FaChevronDown } from "react-icons/fa6";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { auth } from "../firebase";
 import { useState } from "react";
+import { SET_USER_NULL } from "../Store/Slices/User";
 
 function UserProfile() {
   const user = useSelector((state) => state.user?.currentUser);
   const [isMenu, setIsMenu] = useState(false);
+  const dispatch = useDispatch();
 
   return (
     <div className="flex items-center justify-center gap-4 relative">
@@ -51,6 +53,7 @@ function UserProfile() {
           </Link>
           <p
             onClick={async () => {
+              dispatch(SET_USER_NULL());
               await auth.signOut().then(() => window.location.reload());
             }}
             className="text-lg text-primaryText hover:bg-[rgba(256,256,256,0.05)] px-2 py-1 w-full rounded-md"
