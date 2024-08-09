@@ -4,7 +4,7 @@ A web application that replicates the core functionality of CodePen, allowing us
 
 ## Hosted Link
 
-[Click Here](https://geek-codepen-clone.netlify.app/)
+[Click Here](https://codepen-clone-geek.netlify.app/)
 
 ## Images
 
