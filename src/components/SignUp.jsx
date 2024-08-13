@@ -52,7 +52,7 @@ function SignUp() {
         } else {
           setAlert(true);
 
-          setAlertMessage("Temporarily Disabled due to many failures");
+          setAlertMessage("Try Again");
         }
 
         setTimeout(() => {

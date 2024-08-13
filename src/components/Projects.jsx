@@ -18,6 +18,10 @@ function Projects() {
   const user = useSelector((state) => state.user?.currentUser);
   const navigate = useNavigate();
 
+  function handleView(project) {
+    navigate("/newProject", { state: { ...project, view: true } });
+  }
+
   function handleEdit(project) {
     console.log("hello");
     if (user && user.uid === project.user.uid) {
@@ -83,6 +87,8 @@ function Projects() {
               ind={ind}
               handleDelete={handleDelete}
               handleEdit={handleEdit}
+              user={user}
+              handleView={handleView}
             />
           ))
         : projects?.map((project, ind) => (
@@ -92,30 +98,50 @@ function Projects() {
               handleEdit={handleEdit}
               ind={ind}
               handleDelete={handleDelete}
+              user={user}
+              handleView={handleView}
             />
           ))}
     </div>
   );
 }
 
-function ProjectCard({ project, ind, handleDelete, handleEdit }) {
+function ProjectCard({
+  project,
+  ind,
+  handleDelete,
+  handleEdit,
+  user,
+  handleView,
+}) {
   return (
     <div
       key={ind}
-      className="w-full flex flex-col items-center justify-center rounded-md cursor-pointer bg-secondary md:w-[450px] h-[375px] gap-4 p-4"
+      className="w-full flex flex-col items-center cursor-pointer justify-center rounded-md  bg-secondary md:w-[450px] h-[375px] gap-4 p-4"
+      onClick={(event) => {
+        // if (event.target === event.currentTarget) {
+        //   console.log("hello");
+        // }
+        handleView(project);
+      }}
     >
       <div
         className="bg-primary w-full h-full rounded-md overflow-hidden"
-        style={{ overflow: "hidden", height: "100%" }}
+        style={{ overflow: "hidden", height: "100%", cursor: "pointer" }}
       >
         <iframe
           title="Result"
           srcDoc={project.output}
-          style={{ border: "none", width: "100%", height: "100%" }}
+          className="cursor-pointer"
+          style={{
+            border: "none",
+            width: "100%",
+            height: "100%",
+          }}
         />
       </div>
       <div className="flex items-center justify-start gap-3 w-full">
-        <div className="w-14 h-14 flex items-center justify-center rounded-xl overflow-hidden cursor-pointer bg-emerald-500">
+        <div className="w-14 h-14 flex items-center justify-center rounded-xl overflow-hidden  bg-emerald-500">
           {project?.user?.photoURL ? (
             <img
               src={project?.user?.photoURL}
@@ -138,15 +164,25 @@ function ProjectCard({ project, ind, handleDelete, handleEdit }) {
           </p>
         </div>
         {/* ///////////////////////// */}
-        <div className="cursor-pointer ml-auto flex gap-4">
-          <MdEdit
-            className="text-primaryText text-3xl hover:text-white"
-            onClick={() => handleEdit(project)}
-          />
-          <MdDelete
-            className="text-primaryText text-3xl hover:text-white"
-            onClick={() => handleDelete(project.id, project.user.uid)}
-          />
+        <div className=" ml-auto flex gap-4">
+          {user && user.uid === project.user.uid && (
+            <MdEdit
+              className="text-primaryText text-3xl hover:text-white cursor-pointer"
+              onClick={(event) => {
+                event.stopPropagation();
+                handleEdit(project);
+              }}
+            />
+          )}
+          {user && user.uid === project.user.uid && (
+            <MdDelete
+              className="text-primaryText text-3xl hover:text-white cursor-pointer"
+              onClick={(event) => {
+                event.stopPropagation();
+                handleDelete(project.id, project.user.uid);
+              }}
+            />
+          )}
         </div>
       </div>
     </div>

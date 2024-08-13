@@ -52,17 +52,18 @@ function App() {
     const unsub = auth.onAuthStateChanged((user) => {
       if (user) {
         console.log(user, user.providerData[0]);
-        setDoc(doc(db, "users", user?.uid), user?.providerData[0]).then(() => {
-          dispatch(SET_USER(user?.providerData[0]));
-          navigate("/home/projects", { replace: true });
-        });
+        setDoc(doc(db, "users", user?.uid), user?.providerData[0])
+          .then(() => {
+            dispatch(SET_USER(user?.providerData[0]));
+            navigate("/home/projects", { replace: true });
+          })
+          .finally(() => {
+            setIsLoading(false);
+          });
       } else {
         navigate("/home/auth/login", { replace: true });
-      }
-
-      setInterval(() => {
         setIsLoading(false);
-      });
+      }
     });
 
     return () => unsub();

@@ -92,7 +92,10 @@ function NewProject() {
                       placeholder="Your Title"
                       className="px-3 py-2 rounded-mg bg-transparent text-primaryText text-base outline-none border-none"
                       value={title}
-                      onChange={(e) => setTitle(e.target.value)}
+                      onChange={(e) => {
+                        setTitle(e.target.value);
+                        console.log("yo");
+                      }}
                     />
                   </>
                 ) : (
@@ -100,14 +103,15 @@ function NewProject() {
                     <p className="px-3 py-2 text-white text-lg">{title}</p>
                   </>
                 )}
-                {isTitle ? (
+                {!project.view && isTitle && (
                   <div
                     className="cursor-pointer"
                     onClick={() => setIsTitle(false)}
                   >
                     <MdCheck className="text-2xl text-emerald-500 hover:text-white" />
                   </div>
-                ) : (
+                )}
+                {!project.view && !isTitle && (
                   <div
                     className="cursor-pointer"
                     onClick={() => setIsTitle(true)}
@@ -131,12 +135,14 @@ function NewProject() {
           {/* //////////////// */}
           {user && (
             <div className="flex items-center justify-center gap-4">
-              <button
-                onClick={saveProgram}
-                className="px-6 py-2 bg-primaryText cursor-pointer text-base text-primary font-semibold rounded-md hover:text-white"
-              >
-                Save
-              </button>
+              {!project.view && (
+                <button
+                  onClick={saveProgram}
+                  className="px-6 py-2 bg-primaryText cursor-pointer text-base text-primary font-semibold rounded-md hover:text-white"
+                >
+                  Save
+                </button>
+              )}
               <UserProfile />
             </div>
           )}
@@ -174,6 +180,7 @@ function NewProject() {
                     extensions={[javascript({ jsx: true })]}
                     theme={"dark"}
                     onChange={(value) => setHtml(value)}
+                    readOnly={project.view === true ? "nocursor" : false}
                   />
                 </div>
               </div>
@@ -199,6 +206,7 @@ function NewProject() {
                       extensions={[javascript({ jsx: true })]}
                       theme={"dark"}
                       onChange={(value) => setCss(value)}
+                      readOnly={project.view === true ? "nocursor" : false}
                     />
                   </div>
                 </div>
@@ -223,6 +231,7 @@ function NewProject() {
                       extensions={[javascript({ jsx: true })]}
                       theme={"dark"}
                       onChange={(value) => setJs(value)}
+                      readOnly={project.view === true ? "nocursor" : false}
                     />
                   </div>
                 </div>
